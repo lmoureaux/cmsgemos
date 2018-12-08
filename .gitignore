@@ -11,6 +11,7 @@
 
 # Don't ignore Makefiles and templates
 !Makefile
+!CMakeLists.txt
 !*.rules
 !*.mk
 !*spec.template
