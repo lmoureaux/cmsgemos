@@ -66,11 +66,15 @@ function(add_cmsgemos_module name)
     install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
 endfunction()
 
-add_subdirectory(gemutils)
-add_subdirectory(gembase)
+set(COMPONENTS gemutils gembase)
+
+set(CPACK_COMPONENTS_ALL "${COMPONENTS}")
+foreach(c ${COMPONENTS})
+    add_subdirectory(${c})
+    list(APPEND CPACK_COMPONENTS_ALL ${c}-devel)
+endforeach()
 
 include(InstallRequiredSystemLibraries)
-set(CPACK_COMPONENTS_ALL gemutils gembase gembase-devel gemutils-devel)
 set(CPACK_PACKAGING_INSTALL_PREFIX /opt/cmsgemos)
 set(CPACK_PACKAGE_VERSION "${GIT_VERSION}")
 set(CPACK_RPM_COMPONENT_INSTALL ON)
