@@ -55,6 +55,17 @@ execute_process(COMMAND id --user --name OUTPUT_VARIABLE GEMDEVELOPER
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGIT_VERSION=\\\"${GIT_VERSION}\\\"")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGEMDEVELOPER=\\\"${GEMDEVELOPER}\\\"")
 
+function(add_cmsgemos_module name)
+    CMAKE_PARSE_ARGUMENTS(ARG "" "" "SOURCES" "" ${ARGN})
+    set(SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/common/)
+    prepend(SOURCES ${SRC_DIR} ${ARG_SOURCES})
+
+    add_library(${name} SHARED ${SOURCES})
+    target_include_directories(${name} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+    install(TARGETS ${name} LIBRARY DESTINATION lib COMPONENT ${name})
+    install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
+endfunction()
+
 add_subdirectory(gemutils)
 add_subdirectory(gembase)
 
