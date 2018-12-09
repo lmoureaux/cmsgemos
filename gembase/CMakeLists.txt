@@ -1,11 +1,3 @@
-# https://stackoverflow.com/a/27630120
-function(prepend var prefix)
-    set(listVar "")
-    foreach(f ${ARGN})
-        list(APPEND listVar "${prefix}/${f}")
-    endforeach(f)
-    set(${var} "${listVar}" PARENT_SCOPE)
-endfunction(prepend)
 
 set(SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/common/)
 set(GEMBASE_SOURCES
