@@ -1,17 +1,26 @@
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 project(cmsgemos)
 
-macro(use_cxx11)
+function(use_cxx11)
   if(CMAKE_VERSION VERSION_LESS "3.1")
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11" PARENT_SCOPE)
     endif()
   else()
     set(CMAKE_CXX_STANDARD 11)
   endif()
-endmacro(use_cxx11)
+endfunction(use_cxx11)
 
 use_cxx11()
+
+# https://stackoverflow.com/a/27630120
+function(prepend var prefix)
+    set(listVar "")
+    foreach(f ${ARGN})
+        list(APPEND listVar "${prefix}/${f}")
+    endforeach(f)
+    set(${var} "${listVar}" PARENT_SCOPE)
+endfunction(prepend)
 
 # Needed for xdaq system-dependent includes
 string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM)
