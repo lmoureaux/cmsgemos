@@ -50,7 +50,7 @@ add_subdirectory(gemutils)
 add_subdirectory(gembase)
 
 include(InstallRequiredSystemLibraries)
-set(CPACK_COMPONENTS_ALL bin devel)
+set(CPACK_COMPONENTS_ALL gemutils gembase gembase-devel gemutils-devel)
 set(CPACK_PACKAGING_INSTALL_PREFIX /opt/cmsgemos)
 set(CPACK_PACKAGE_VERSION "${GIT_VERSION}")
 set(CPACK_RPM_COMPONENT_INSTALL ON)
