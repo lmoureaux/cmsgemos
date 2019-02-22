@@ -35,6 +35,7 @@ set_property(TARGET xdaq PROPERTY IMPORTED_LOCATION /opt/xdaq/lib/libxdaq.so)
 
 # Python
 find_package(PythonLibs 2.6 REQUIRED)
+find_package(PythonInterp 2.6 REQUIRED)
 
 add_library(python UNKNOWN IMPORTED)
 set_property(TARGET python APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${PYTHON_INCLUDE_DIRS}")
@@ -56,17 +57,17 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGIT_VERSION=\\\"${GIT_VERSION}\\\"")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGEMDEVELOPER=\\\"${GEMDEVELOPER}\\\"")
 
 function(add_cmsgemos_module name)
-    CMAKE_PARSE_ARGUMENTS(ARG "" "" "SOURCES" "" ${ARGN})
+    cmake_parse_arguments(ARG "" "" "SOURCES;GENERATED_SOURCES" "" ${ARGN})
     set(SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/common/)
     prepend(SOURCES ${SRC_DIR} ${ARG_SOURCES})
 
-    add_library(${name} SHARED ${SOURCES})
-    target_include_directories(${name} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+    add_library(${name} SHARED ${SOURCES} ${ARG_GENERATED_SOURCES})
+    target_include_directories(${name} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include )
     install(TARGETS ${name} LIBRARY DESTINATION lib COMPONENT ${name})
     install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
 endfunction()
 
-set(COMPONENTS gemutils gembase)
+set(COMPONENTS gemutils gembase gemonlinedb)
 
 set(CPACK_COMPONENTS_ALL "${COMPONENTS}")
 foreach(c ${COMPONENTS})
