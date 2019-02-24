@@ -138,6 +138,25 @@ set_property(TARGET cactus_amc13_tools
              PROPERTY INTERFACE_LINK_LIBRARIES
              cactus_amc13_amc13)
 
+# xhal
+# FIXME Use FindxHAL.cmake once provided
+find_library(WISCRPCSVC_LOCATION wiscrpcsvc PATHS /opt/wiscrpcsvc/lib)
+add_library(wiscrpcsvc SHARED IMPORTED)
+set_property(TARGET wiscrpcsvc PROPERTY IMPORTED_LOCATION ${WISCRPCSVC_LOCATION})
+
+find_library(XHAL_LOCATION xhal PATHS /opt/xhal/lib)
+add_library(xhal SHARED IMPORTED)
+set_property(
+    TARGET xhal
+    APPEND PROPERTY
+    INTERFACE_INCLUDE_DIRECTORIES /opt/xhal/include)
+set_property(
+    TARGET xhal
+    APPEND PROPERTY
+    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/xhal/include)
+set_property(TARGET xhal PROPERTY IMPORTED_LOCATION ${XHAL_LOCATION})
+set_property(TARGET xhal PROPERTY INTERFACE_LINK_LIBRARIES wiscrpcsvc)
+
 # Python
 find_package(PythonLibs 2.6 REQUIRED)
 find_package(PythonInterp 2.6 REQUIRED)
@@ -148,7 +167,7 @@ set_property(TARGET python APPEND PROPERTY INTERFACE_SYSTEM_INCLUDE_DIRECTORIES 
 set_property(TARGET python PROPERTY IMPORTED_LOCATION "${PYTHON_LIBRARIES}")
 
 # Boost
-find_package(Boost REQUIRED COMPONENTS filesystem system unit_test_framework)
+find_package(Boost REQUIRED COMPONENTS filesystem iostreams system unit_test_framework)
 
 # MySQL
 execute_process(COMMAND mysql_config --cflags
@@ -186,7 +205,7 @@ function(add_cmsgemos_module name)
     install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
 endfunction()
 
-set(COMPONENTS gemutils gembase gemhardware gemonlinedb gemreadout gemsupervisor)
+set(COMPONENTS gemutils gembase gemdaqmonitor gemhardware gemonlinedb gemreadout gemsupervisor)
 
 set(CPACK_COMPONENTS_ALL "${COMPONENTS}")
 foreach(c ${COMPONENTS})
