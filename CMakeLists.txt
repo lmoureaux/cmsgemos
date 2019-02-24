@@ -85,6 +85,22 @@ import_xdaq_library(xgi DEPENDS cgicc config toolbox xcept xerces-c ${CMAKE_THRE
 import_xdaq_library(xoap DEPENDS config toolbox xcept xerces-c)
 import_xdaq_library(xdaq DEPENDS config log4cplus logudpappender logxmlappender peer toolbox xcept xdata xerces-c xgi xoap)
 
+# uhal
+find_library(UHAL_LOCATION cactus_uhal_uhal PATHS /opt/cactus/lib)
+add_library(cactus_uhal_uhal SHARED IMPORTED)
+set_property(
+    TARGET cactus_uhal_uhal
+    APPEND PROPERTY
+    INTERFACE_INCLUDE_DIRECTORIES /opt/cactus/include)
+set_property(
+    TARGET cactus_uhal_uhal
+    APPEND PROPERTY
+    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/cactus/include)
+set_property(
+    TARGET cactus_uhal_uhal
+    PROPERTY IMPORTED_LOCATION
+    ${UHAL_LOCATION})
+
 # Python
 find_package(PythonLibs 2.6 REQUIRED)
 find_package(PythonInterp 2.6 REQUIRED)
@@ -133,7 +149,7 @@ function(add_cmsgemos_module name)
     install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
 endfunction()
 
-set(COMPONENTS gemutils gembase gemonlinedb)
+set(COMPONENTS gemutils gembase gemhardware gemonlinedb)
 
 set(CPACK_COMPONENTS_ALL "${COMPONENTS}")
 foreach(c ${COMPONENTS})
