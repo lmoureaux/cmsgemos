@@ -103,6 +103,40 @@ set_property(
     PROPERTY IMPORTED_LOCATION
     ${UHAL_LOCATION})
 
+# amc13 tools
+find_library(AMC13_AMC13_LOCATION cactus_amc13_amc13 PATHS /opt/cactus/lib)
+add_library(cactus_amc13_amc13 SHARED IMPORTED)
+set_property(
+    TARGET cactus_amc13_amc13
+    APPEND PROPERTY
+    INTERFACE_INCLUDE_DIRECTORIES /opt/cactus/include)
+set_property(
+    TARGET cactus_amc13_amc13
+    APPEND PROPERTY
+    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/cactus/include)
+set_property(
+    TARGET cactus_amc13_amc13
+    PROPERTY IMPORTED_LOCATION
+    ${AMC13_AMC13_LOCATION})
+
+find_library(AMC13_TOOLS_LOCATION cactus_amc13_tools PATHS /opt/cactus/lib)
+add_library(cactus_amc13_tools SHARED IMPORTED)
+set_property(
+    TARGET cactus_amc13_tools
+    APPEND PROPERTY
+    INTERFACE_INCLUDE_DIRECTORIES /opt/cactus/include)
+set_property(
+    TARGET cactus_amc13_tools
+    APPEND PROPERTY
+    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/cactus/include)
+set_property(
+    TARGET cactus_amc13_tools
+    PROPERTY IMPORTED_LOCATION
+    ${AMC13_TOOLS_LOCATION})
+set_property(TARGET cactus_amc13_tools
+             PROPERTY INTERFACE_LINK_LIBRARIES
+             cactus_amc13_amc13)
+
 # Python
 find_package(PythonLibs 2.6 REQUIRED)
 find_package(PythonInterp 2.6 REQUIRED)
