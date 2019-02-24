@@ -167,7 +167,7 @@ set_property(TARGET python APPEND PROPERTY INTERFACE_SYSTEM_INCLUDE_DIRECTORIES 
 set_property(TARGET python PROPERTY IMPORTED_LOCATION "${PYTHON_LIBRARIES}")
 
 # Boost
-find_package(Boost REQUIRED COMPONENTS filesystem iostreams system unit_test_framework)
+find_package(Boost REQUIRED COMPONENTS filesystem iostreams python system unit_test_framework)
 
 # MySQL
 execute_process(COMMAND mysql_config --cflags
@@ -205,7 +205,7 @@ function(add_cmsgemos_module name)
     install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
 endfunction()
 
-set(COMPONENTS gemutils gembase gemdaqmonitor gemhardware gemonlinedb gemreadout gemsupervisor)
+set(COMPONENTS gemutils gembase gemdaqmonitor gemhardware gemonlinedb gempython gemreadout gemsupervisor)
 
 set(CPACK_COMPONENTS_ALL "${COMPONENTS}")
 foreach(c ${COMPONENTS})
