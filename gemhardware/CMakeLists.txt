@@ -9,7 +9,7 @@ add_cmsgemos_module(
     optohybrid/HwOptoHybrid.cc
 )
 target_link_libraries(gemhardware_devices PUBLIC gemutils)
-target_link_libraries(gemhardware_devices PUBLIC cactus_uhal_uhal)
+target_link_libraries(gemhardware_devices PUBLIC CACTUS::uhal_uhal)
 target_link_libraries(gemhardware_devices PUBLIC xHAL::xhal_core)
 
 add_cmsgemos_module(
@@ -32,6 +32,6 @@ add_cmsgemos_module(
 )
 target_link_libraries(gemhardware_managers PUBLIC gemhardware_devices)
 target_link_libraries(gemhardware_managers PUBLIC gemreadout)
-target_link_libraries(gemhardware_managers PUBLIC cactus_amc13_tools)
+target_link_libraries(gemhardware_managers PUBLIC CACTUS::amc13_tools)
 
 install(DIRECTORY include/gem DESTINATION include COMPONENT gemhardware-devel PATTERN *.h)

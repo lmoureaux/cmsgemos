@@ -20,8 +20,9 @@ endfunction(use_cxx11)
 
 use_cxx11()
 
-# xdaq dependencies
-find_package(Threads REQUIRED)
+# Dependencies
+find_package(CACTUS REQUIRED)
+find_package(xDAQ REQUIRED)
 
 # https://stackoverflow.com/a/27630120
 function(prepend var prefix)
@@ -31,117 +32,6 @@ function(prepend var prefix)
     endforeach(f)
     set(${var} "${listVar}" PARENT_SCOPE)
 endfunction(prepend)
-
-# Needed for xdaq system-dependent includes
-string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM)
-
-# Define xdaq libraries
-function(import_xdaq_library lib_name)
-    cmake_parse_arguments(ARG "" "" "DEPENDS" "" ${ARGN})
-
-    find_library(${lib_name}_LOCATION ${lib_name} PATHS /opt/xdaq/lib)
-    add_library(${lib_name} SHARED IMPORTED)
-    set_property(
-        TARGET ${lib_name}
-        APPEND PROPERTY
-        INTERFACE_INCLUDE_DIRECTORIES /opt/xdaq/include)
-    set_property(
-        TARGET ${lib_name}
-        APPEND PROPERTY
-        INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/xdaq/include)
-    set_property(
-        TARGET ${lib_name}
-        APPEND PROPERTY
-        INTERFACE_INCLUDE_DIRECTORIES /opt/xdaq/include/${SYSTEM})
-    set_property(
-        TARGET ${lib_name}
-        APPEND PROPERTY
-        INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/xdaq/include/${SYSTEM})
-    set_property(
-        TARGET ${lib_name}
-        PROPERTY IMPORTED_LOCATION
-        ${${lib_name}_LOCATION})
-
-    # Dependencies aren't written into .so as they should be, so we need to
-    # link explicitely
-    set_property(
-        TARGET ${lib_name}
-        PROPERTY INTERFACE_LINK_LIBRARIES
-        ${ARG_DEPENDS})
-endfunction()
-
-import_xdaq_library(asyncresolv)
-import_xdaq_library(cgicc)
-import_xdaq_library(config DEPENDS xcept)
-import_xdaq_library(i2o DEPENDS config toolbox xcept)
-set_property(TARGET i2o APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS LITTLE_ENDIAN__)
-import_xdaq_library(log4cplus)
-import_xdaq_library(peer DEPENDS config toolbox xcept xoap ${CMAKE_THREAD_LIBS_INIT})
-import_xdaq_library(logudpappender DEPENDS config log4cplus)
-import_xdaq_library(logxmlappender DEPENDS config log4cplus)
-import_xdaq_library(mimetic)
-import_xdaq_library(toolbox DEPENDS asyncresolv cgicc log4cplus uuid ${CMAKE_THREAD_LIBS_INIT})
-import_xdaq_library(tstoreclient)
-import_xdaq_library(tstoreutils)
-import_xdaq_library(tstore DEPENDS tstoreclient tstoreutils xalan-c)
-import_xdaq_library(xalan-c)
-import_xdaq_library(xcept DEPENDS config toolbox)
-import_xdaq_library(xdata DEPENDS config mimetic toolbox xcept xerces-c xoap ${CMAKE_THREAD_LIBS_INIT})
-import_xdaq_library(xdaq2rc DEPENDS config log4cplus toolbox xdaq xdata xerces-c xoap ${CMAKE_THREAD_LIBS_INIT})
-import_xdaq_library(xerces-c)
-import_xdaq_library(xgi DEPENDS cgicc config toolbox xcept xerces-c ${CMAKE_THREAD_LIBS_INIT})
-import_xdaq_library(xoap DEPENDS config toolbox xcept xerces-c)
-import_xdaq_library(xdaq DEPENDS config log4cplus logudpappender logxmlappender peer toolbox xcept xdata xerces-c xgi xoap)
-
-# uhal
-find_library(UHAL_LOCATION cactus_uhal_uhal PATHS /opt/cactus/lib)
-add_library(cactus_uhal_uhal SHARED IMPORTED)
-set_property(
-    TARGET cactus_uhal_uhal
-    APPEND PROPERTY
-    INTERFACE_INCLUDE_DIRECTORIES /opt/cactus/include)
-set_property(
-    TARGET cactus_uhal_uhal
-    APPEND PROPERTY
-    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/cactus/include)
-set_property(
-    TARGET cactus_uhal_uhal
-    PROPERTY IMPORTED_LOCATION
-    ${UHAL_LOCATION})
-
-# amc13 tools
-find_library(AMC13_AMC13_LOCATION cactus_amc13_amc13 PATHS /opt/cactus/lib)
-add_library(cactus_amc13_amc13 SHARED IMPORTED)
-set_property(
-    TARGET cactus_amc13_amc13
-    APPEND PROPERTY
-    INTERFACE_INCLUDE_DIRECTORIES /opt/cactus/include)
-set_property(
-    TARGET cactus_amc13_amc13
-    APPEND PROPERTY
-    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/cactus/include)
-set_property(
-    TARGET cactus_amc13_amc13
-    PROPERTY IMPORTED_LOCATION
-    ${AMC13_AMC13_LOCATION})
-
-find_library(AMC13_TOOLS_LOCATION cactus_amc13_tools PATHS /opt/cactus/lib)
-add_library(cactus_amc13_tools SHARED IMPORTED)
-set_property(
-    TARGET cactus_amc13_tools
-    APPEND PROPERTY
-    INTERFACE_INCLUDE_DIRECTORIES /opt/cactus/include)
-set_property(
-    TARGET cactus_amc13_tools
-    APPEND PROPERTY
-    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/cactus/include)
-set_property(
-    TARGET cactus_amc13_tools
-    PROPERTY IMPORTED_LOCATION
-    ${AMC13_TOOLS_LOCATION})
-set_property(TARGET cactus_amc13_tools
-             PROPERTY INTERFACE_LINK_LIBRARIES
-             cactus_amc13_amc13)
 
 # xhal
 # FIXME Use FindxHAL.cmake once provided
