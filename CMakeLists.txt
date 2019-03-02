@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Prevent in-source builds
+include(FeatureSummary)
 include(PreventInSourceBuilds)
 
 project(cmsgemos)
@@ -113,3 +114,5 @@ set(CPACK_PACKAGING_INSTALL_PREFIX /opt/cmsgemos)
 set(CPACK_PACKAGE_VERSION "${GIT_VERSION}")
 set(CPACK_RPM_COMPONENT_INSTALL ON)
 include(CPack)
+
+feature_summary(WHAT ALL)
