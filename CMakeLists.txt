@@ -23,7 +23,7 @@ use_cxx11()
 
 # Dependencies
 find_package(CACTUS REQUIRED)
-find_package(xDAQ REQUIRED)
+find_package(xDAQ 3.4 REQUIRED i2o tstore xdaq xdaq2rc)
 
 # https://stackoverflow.com/a/27630120
 function(prepend var prefix)
