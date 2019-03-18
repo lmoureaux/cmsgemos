@@ -66,15 +66,10 @@ set_property(TARGET python PROPERTY IMPORTED_LOCATION "${PYTHON_LIBRARIES}")
 find_package(Boost REQUIRED COMPONENTS filesystem iostreams python system unit_test_framework)
 
 # MySQL
-execute_process(COMMAND mysql_config --cflags
-    OUTPUT_VARIABLE MYSQL_CFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE)
-execute_process(COMMAND mysql_config --libs
-    OUTPUT_VARIABLE MYSQL_LIBS OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-add_library(mysqlclient SHARED IMPORTED)
-set_property(TARGET mysqlclient PROPERTY INTERFACE_LINK_LIBRARIES ${MYSQL_LIBS})
-set_property(TARGET mysqlclient PROPERTY INTERFACE_COMPILE_OPTIONS ${MYSQL_CFLAGS})
-set_property(TARGET mysqlclient PROPERTY IMPORTED_LOCATION /usr/lib64/mysql/libmysqlclient.so)
+find_package(MySQL REQUIRED)
+add_library(mysqlclient INTERFACE)
+set_property(TARGET mysqlclient PROPERTY INTERFACE_LINK_LIBRARIES ${MYSQL_LIBRARIES})
+set_property(TARGET mysqlclient PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${MYSQL_INCLUDE_DIR})
 
 # Git version
 find_package(Git)
