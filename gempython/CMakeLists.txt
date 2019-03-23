@@ -1,5 +1,6 @@
 add_cmsgemos_module(
     gempython
+    NO_HEADERS
 
     SOURCES
     cmsgemos_gempython.cc
