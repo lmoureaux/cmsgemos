@@ -24,6 +24,7 @@ use_cxx11()
 # Dependencies
 find_package(CACTUS REQUIRED)
 find_package(xDAQ 3.4 REQUIRED i2o tstore xdaq xdaq2rc)
+find_package(xHAL REQUIRED)
 
 # https://stackoverflow.com/a/27630120
 function(prepend var prefix)
@@ -33,25 +34,6 @@ function(prepend var prefix)
     endforeach(f)
     set(${var} "${listVar}" PARENT_SCOPE)
 endfunction(prepend)
-
-# xhal
-# FIXME Use FindxHAL.cmake once provided
-find_library(WISCRPCSVC_LOCATION wiscrpcsvc PATHS /opt/wiscrpcsvc/lib)
-add_library(wiscrpcsvc SHARED IMPORTED)
-set_property(TARGET wiscrpcsvc PROPERTY IMPORTED_LOCATION ${WISCRPCSVC_LOCATION})
-
-find_library(XHAL_LOCATION xhal PATHS /opt/xhal/lib)
-add_library(xhal SHARED IMPORTED)
-set_property(
-    TARGET xhal
-    APPEND PROPERTY
-    INTERFACE_INCLUDE_DIRECTORIES /opt/xhal/include)
-set_property(
-    TARGET xhal
-    APPEND PROPERTY
-    INTERFACE_SYSTEM_INCLUDE_DIRECTORIES /opt/xhal/include)
-set_property(TARGET xhal PROPERTY IMPORTED_LOCATION ${XHAL_LOCATION})
-set_property(TARGET xhal PROPERTY INTERFACE_LINK_LIBRARIES wiscrpcsvc)
 
 # Python
 find_package(PythonLibs 2.6 REQUIRED)
