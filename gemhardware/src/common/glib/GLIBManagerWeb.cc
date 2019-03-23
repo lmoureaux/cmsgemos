@@ -109,7 +109,7 @@ void gem::hw::glib::GLIBManagerWeb::buildCardSummaryTable(xgi::Input* in, xgi::O
     if (card) {
       std::stringstream tdid;
       tdid << card->getDeviceID();
-      *out << "            <td id=\"" << tdid << "\">" << std::endl
+      *out << "            <td id=\"" << tdid.rdbuf() << "\">" << std::endl
            << "            </td>"           << std::endl;
     }
   }

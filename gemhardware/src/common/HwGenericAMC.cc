@@ -1148,7 +1148,7 @@ void gem::hw::HwGenericAMC::ttcMMCMPhaseShift(bool shiftOutOfLockFirst, bool use
   } else {
     std::stringstream msg;
     msg << "HwGeneircAMC::ttcMMCMPhaseShift Unable to find lock";
-    CMSGEMOS_ERROR(msg);
+    CMSGEMOS_ERROR(msg.rdbuf());
     // XCEPT_RAISE(gem::hw::exception::MMCMLockFailed,msg);
   }
 }

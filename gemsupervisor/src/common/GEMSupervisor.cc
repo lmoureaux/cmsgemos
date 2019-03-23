@@ -411,7 +411,7 @@ void gem::supervisor::GEMSupervisor::configureAction()
             content.assign( (std::istreambuf_iterator<char>(ifs) ),
                             (std::istreambuf_iterator<char>()    ) );
             CMSGEMOS_INFO("GEMSupervisor::configureAction ICI HW config " << m_tcdsConfig.bag.iciHWConfig.toString()
-                 << " (0x" << std::hex << ifs << std::dec << ") is:" << std::endl << content);
+                 << " (0x" << std::hex << &ifs << std::dec << ") is:" << std::endl << content);
           } else if (((*j)->getClassName()).rfind("PI") != std::string::npos) {
             std::ifstream ifs(m_tcdsConfig.bag.piHWConfig.toString());
             content.assign( (std::istreambuf_iterator<char>(ifs) ),
