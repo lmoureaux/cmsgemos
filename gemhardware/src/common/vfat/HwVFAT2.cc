@@ -106,7 +106,7 @@ std::string gem::hw::vfat::HwVFAT2::printErrorCounts() const {
             << "Invalid:    " << m_vfatErrors.Invalid    << std::endl
             << "RWMismatch: " << m_vfatErrors.RWMismatch << std::endl
             << gem::hw::GEMHwDevice::printErrorCounts() << std::endl;
-  CMSGEMOS_DEBUG(errstream);
+  CMSGEMOS_DEBUG(errstream.rdbuf());
   return errstream.str();
 }
 
