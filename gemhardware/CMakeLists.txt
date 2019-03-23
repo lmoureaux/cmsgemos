@@ -32,6 +32,6 @@ add_cmsgemos_module(
 )
 target_link_libraries(gemhardware_managers PUBLIC gemhardware_devices)
 target_link_libraries(gemhardware_managers PUBLIC gemreadout)
-target_link_libraries(gemhardware_managers PUBLIC CACTUS::amc13_tools)
+target_link_libraries(gemhardware_managers PUBLIC CACTUS::amc13_amc13)
 
 install(DIRECTORY include/gem DESTINATION include COMPONENT gemhardware-devel PATTERN *.h)
