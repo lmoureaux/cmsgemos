@@ -1,3 +1,20 @@
+# Create a directory to be used as XDAQ_DOCUMENT_ROOT
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/htdocs)
+file(GLOB htdocs_subdirs
+     LIST_DIRECTORIES TRUE
+     CONFIGURE_DEPENDS
+     RELATIVE
+     ${xDAQ_HTML_DIR}
+     ${xDAQ_HTML_DIR}/*)
+foreach(subdir IN LISTS htdocs_subdirs)
+    add_custom_target(
+        htdocs-symlink-${subdir}
+        ALL cmake -E create_symlink ${xDAQ_HTML_DIR}/${subdir} htdocs/${subdir})
+endforeach()
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/htdocs
+        DESTINATION share/cmsgemos
+        COMPONENT gembase)
+
 add_cmsgemos_module(gembase SOURCES
     version.cc
     GEMApplication.cc
@@ -8,6 +25,3 @@ add_cmsgemos_module(gembase SOURCES
     utils/GEMInfoSpaceToolBox.cc
 )
 target_link_libraries(gembase gemutils)
-
-install(DIRECTORY html DESTINATION /opt/xdaq/htdocs/cmsgemos/gembase COMPONENT gembase)
-install(DIRECTORY xml DESTINATION share/gembase COMPONENT gembase)
