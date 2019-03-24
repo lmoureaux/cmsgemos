@@ -82,6 +82,16 @@ function(add_cmsgemos_module name)
     if(NOT ARG_NO_HEADERS)
         install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
     endif()
+
+    # Install HTML files
+    if(IS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/html)
+        install(DIRECTORY html DESTINATION share/cmsgemos/htdocs/${name} COMPONENT ${name})
+    endif()
+
+    # Install XML files
+    if(IS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/xml)
+        install(DIRECTORY xml DESTINATION share/${name} COMPONENT ${name})
+    endif()
 endfunction()
 
 set(COMPONENTS gemutils gembase gemdaqmonitor gemhardware gemonlinedb gempython gemreadout gemsupervisor)

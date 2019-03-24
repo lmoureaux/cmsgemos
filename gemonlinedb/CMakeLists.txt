@@ -55,9 +55,6 @@ target_link_libraries(gemonlinedb xDAQ::tstore)
 target_link_libraries(gemonlinedb ${Boost_FILESYSTEM_LIBRARY})
 target_link_libraries(gemonlinedb ${Boost_SYSTEM_LIBRARY})
 
-install(DIRECTORY html DESTINATION /opt/xdaq/htdocs/cmsgemos/gemonlinedb COMPONENT gemonlinedb)
-install(DIRECTORY xml DESTINATION share/gemonlinedb COMPONENT gemonlinedb)
-
 #
 # Tests
 #
