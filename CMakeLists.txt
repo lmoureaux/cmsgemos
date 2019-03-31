@@ -19,7 +19,7 @@ function(use_cxx11)
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11" PARENT_SCOPE)
     endif()
   else()
-    set(CMAKE_CXX_STANDARD 11)
+    set(CMAKE_CXX_STANDARD 11 PARENT_SCOPE)
   endif()
 endfunction(use_cxx11)
 
