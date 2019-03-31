@@ -2,9 +2,8 @@
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/htdocs)
 file(GLOB htdocs_subdirs
      LIST_DIRECTORIES TRUE
+     RELATIVE ${xDAQ_HTML_DIR}
      CONFIGURE_DEPENDS
-     RELATIVE
-     ${xDAQ_HTML_DIR}
      ${xDAQ_HTML_DIR}/*)
 foreach(subdir IN LISTS htdocs_subdirs)
     add_custom_target(
