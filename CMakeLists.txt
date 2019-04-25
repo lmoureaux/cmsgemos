@@ -86,7 +86,9 @@ function(add_cmsgemos_module name)
 
     # Install HTML files
     if(IS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/html)
-        install(DIRECTORY html DESTINATION share/cmsgemos/htdocs/${name} COMPONENT ${name})
+        install(DIRECTORY html
+                DESTINATION share/cmsgemos/htdocs/gemdaq/${name}
+                COMPONENT ${name})
     endif()
 
     # Install XML files
