@@ -27,7 +27,7 @@ use_cxx11()
 
 # Dependencies
 find_package(CACTUS REQUIRED)
-find_package(xDAQ 3.4 REQUIRED i2o tstore xdaq xdaq2rc)
+find_package(xDAQ 3.4 REQUIRED i2o jansson tstore xdaq xdaq2rc)
 find_package(xHAL REQUIRED)
 
 # https://stackoverflow.com/a/27630120
@@ -49,7 +49,7 @@ set_property(TARGET python APPEND PROPERTY INTERFACE_SYSTEM_INCLUDE_DIRECTORIES 
 set_property(TARGET python PROPERTY IMPORTED_LOCATION "${PYTHON_LIBRARIES}")
 
 # Boost
-find_package(Boost REQUIRED COMPONENTS filesystem iostreams python system unit_test_framework)
+find_package(Boost REQUIRED COMPONENTS filesystem iostreams python system thread unit_test_framework)
 
 # MySQL
 find_package(MySQL REQUIRED)
