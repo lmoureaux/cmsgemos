@@ -78,6 +78,7 @@ function(add_cmsgemos_module name)
 
     add_library(${name} SHARED ${SOURCES} ${ARG_GENERATED_SOURCES})
     target_include_directories(${name} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include )
+    set_property(TARGET ${name} PROPERTY INSTALL_RPATH "$ORIGIN")
     install(TARGETS ${name} LIBRARY DESTINATION lib COMPONENT ${name})
     if(NOT ARG_NO_HEADERS)
         install(DIRECTORY include/gem DESTINATION include COMPONENT ${name}-devel PATTERN *.h)
