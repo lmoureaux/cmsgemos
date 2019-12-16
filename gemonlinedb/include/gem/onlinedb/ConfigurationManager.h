@@ -35,6 +35,7 @@ namespace gem {
                 std::size_t amcCount   = 0;
                 std::size_t amc13Count = 0;
                 std::size_t ohCount    = 0;
+                std::size_t gbtCount   = 0;
                 std::size_t vfatCount  = 0;
             };
 

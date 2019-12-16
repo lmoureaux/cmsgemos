@@ -147,6 +147,13 @@ namespace gem {
                                 if (oh != nullptr) {
                                     stats.ohCount++;
 
+                                    auto gbtConfigs = oh->getGBTXConfigs();
+                                    for (auto &gbt : gbtConfigs) {
+                                        if (gbt != nullptr) {
+                                            stats.gbtCount++;
+                                        }
+                                    }
+
                                     auto vfatConfigs = oh->getVFATConfigs();
                                     for (auto &vfat : vfatConfigs) {
                                         if (vfat != nullptr) {

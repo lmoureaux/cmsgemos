@@ -32,6 +32,7 @@ var updateMonitoring = function(json)
     $("#amc13-count").text(json.statistics["amc13-count"]);
     $("#amc-count").text(json.statistics["amc-count"]);
     $("#oh-count").text(json.statistics["oh-count"]);
+    $("#gbt-count").text(json.statistics["gbt-count"]);
     $("#vfat-count").text(json.statistics["vfat-count"]);
 }
 

@@ -112,6 +112,10 @@ void gem::onlinedb::GEMOnlineDBManagerWeb::monitorPage(xgi::Input* in, xgi::Outp
            << cgicc::td().set("id", "oh-count") << cgicc::td()
            << cgicc::tr();
       *out << cgicc::tr()
+           << cgicc::th("GBT")
+           << cgicc::td().set("id", "gbt-count") << cgicc::td()
+           << cgicc::tr();
+      *out << cgicc::tr()
            << cgicc::th("VFAT")
            << cgicc::td().set("id", "vfat-count") << cgicc::td()
            << cgicc::tr();
@@ -223,6 +227,10 @@ void gem::onlinedb::GEMOnlineDBManagerWeb::jsonUpdate(xgi::Input* in, xgi::Outpu
         statsJson,
         "oh-count",
         janssonCheckPtr(json_integer(stats.ohCount))));
+      janssonCheck(json_object_set_new(
+        statsJson,
+        "gbt-count",
+        janssonCheckPtr(json_integer(stats.gbtCount))));
       janssonCheck(json_object_set_new(
         statsJson,
         "vfat-count",
